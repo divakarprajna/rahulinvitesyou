@@ -83,10 +83,7 @@ export function Envelope({ opening, onOpen }: EnvelopeProps) {
             <span>Holy Matrimony</span>
           </div>
           <div className="env-pocket" />
-          <div className="env-flap">
-            <div className="flap-face flap-back" />
-            <div className="flap-face flap-front" />
-          </div>
+          <div className="env-flap" />
           <button
             type="button"
             className="seal"

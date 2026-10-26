@@ -243,12 +243,6 @@ export function Invitation() {
               സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു
             </p>
             {dateLabel && <p className="date-line">{dateLabel}</p>}
-            <Countdown />
-            {weddingDate() && (
-              <button type="button" className="ghost-button light" onClick={addToCalendar}>
-                Add to calendar
-              </button>
-            )}
           </div>
         </div>
         <a className="scroll-cue" href="#welcome">
@@ -268,6 +262,18 @@ export function Invitation() {
           prayers are the gift they hope for.
         </p>
       </section>
+
+      {weddingDate() && (
+        <section className="countdown-band" aria-label="Countdown to the wedding">
+          <p className="kicker">Counting the days</p>
+          <h2>Until we say I do</h2>
+          {dateLabel && <p className="countdown-date">{dateLabel}</p>}
+          <Countdown />
+          <button type="button" className="ghost-button" onClick={addToCalendar}>
+            Add to calendar
+          </button>
+        </section>
+      )}
 
       <section ref={church.ref} className={`section ${church.className}`}>
         <div className="split">
