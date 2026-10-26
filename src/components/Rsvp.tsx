@@ -56,6 +56,23 @@ function draftMessage(input: {
  * Attendance, guest count, and the note ride in the name
  * so they still land in that same spreadsheet.
  */
+function nameError(value: string) {
+  const trimmed = value.trim()
+  if (!trimmed) return 'Please enter your name.'
+  if (trimmed.length < 2 || !/\p{L}/u.test(trimmed)) return 'Please enter your name.'
+  return ''
+}
+
+function phoneError(value: string, strict: boolean) {
+  const trimmed = value.trim()
+  if (!trimmed) return strict ? 'Please enter a phone number.' : ''
+  const digits = trimmed.replace(/\D/g, '')
+  const shaped = /^\+?[\d\s()-]+$/.test(trimmed)
+  if (!shaped || digits.length > 15) return 'Enter a phone number with 8 to 15 digits.'
+  if (digits.length < 8) return strict ? 'Enter a phone number with 8 to 15 digits.' : ''
+  return ''
+}
+
 function sheetName(input: {
   name: string
   guests: number
@@ -80,6 +97,12 @@ export function Rsvp() {
   const [note, setNote] = useState('')
   const [status, setStatus] = useState<Status>('idle')
   const [sentText, setSentText] = useState('')
+  const [attempted, setAttempted] = useState(false)
+  const [nameBlurred, setNameBlurred] = useState(false)
+  const [phoneBlurred, setPhoneBlurred] = useState(false)
+
+  const nameMessage = nameError(name)
+  const phoneMessage = phoneError(phone, attempted || phoneBlurred)
 
   const draft = draftMessage({
     name: name.trim(),
@@ -96,7 +119,8 @@ export function Rsvp() {
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!attendance) return
+    setAttempted(true)
+    if (!attendance || nameError(name) || phoneError(phone, true)) return
 
     const payload = {
       name: name.trim(),
@@ -141,29 +165,44 @@ export function Rsvp() {
           the day.
         </p>
 
-        <form className="rsvp-form" onSubmit={(event) => void onSubmit(event)}>
+        <form className="rsvp-form" autoComplete="off" onSubmit={(event) => void onSubmit(event)}>
           <label>
             Your name
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
-              name="name"
-              autoComplete="name"
-              required
+              onBlur={() => setNameBlurred(true)}
+              name="guest-name"
+              autoComplete="off"
+              aria-invalid={Boolean((attempted || nameBlurred) && nameMessage)}
+              aria-describedby={(attempted || nameBlurred) && nameMessage ? 'name-error' : undefined}
               placeholder="Name"
             />
+            {(attempted || nameBlurred) && nameMessage && (
+              <span className="field-error" id="name-error" role="alert">
+                {nameMessage}
+              </span>
+            )}
           </label>
           <label>
             Phone number
             <input
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
-              name="phone"
+              onBlur={() => setPhoneBlurred(true)}
+              name="guest-phone"
               type="tel"
-              autoComplete="tel"
-              required
-              placeholder="So they can reach you"
+              inputMode="tel"
+              autoComplete="off"
+              aria-invalid={Boolean(phoneMessage)}
+              aria-describedby={phoneMessage ? 'phone-error' : undefined}
+              placeholder="Phone number"
             />
+            {phoneMessage && (
+              <span className="field-error" id="phone-error" role="alert">
+                {phoneMessage}
+              </span>
+            )}
           </label>
 
           <fieldset>

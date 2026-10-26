@@ -607,6 +607,12 @@ blockquote cite {
   font-size: 16px;
   font-weight: 400;
 }
+.rsvp-form input[aria-invalid='true'] { border-color: #8a2a2a; }
+.field-error {
+  color: #8a2a2a;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
 .rsvp-form input:focus,
 .rsvp-form textarea:focus,
 .seal:focus-visible,
