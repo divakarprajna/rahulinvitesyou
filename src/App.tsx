@@ -27,7 +27,7 @@ export default function App() {
     if (phase !== 'sealed') return
     playChime()
     setPhase('opening')
-    const wait = prefersReducedMotion() ? 0 : 1100
+    const wait = prefersReducedMotion() ? 0 : 3100
     timer.current = window.setTimeout(() => setPhase('open'), wait)
   }
 

@@ -6,6 +6,7 @@ import {
   weddingDate,
   weddingIcs,
 } from '../config'
+import { GardenBackdrop } from './GardenBackdrop'
 import { Rsvp } from './Rsvp'
 
 type Photo = {
@@ -228,6 +229,7 @@ export function Invitation() {
     <main className="page">
       <div className="progress" aria-hidden="true" />
       <header className="hero">
+        <GardenBackdrop />
         <div className="hero-card">
           <PhotoButton
             photo={photos.stairs}

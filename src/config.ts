@@ -3,10 +3,7 @@ const asset = (path: string) =>
 
 /**
  * Venue names and addresses come from the location screenshots.
- * The ceremony times are set. The wedding date is still missing.
- * When you have the day, fill dateISO and dateDisplay. Example:
- * dateISO: 'YYYY-MM-DDT15:15:00+05:30'
- * dateDisplay: 'Weekday, D Month YYYY'
+ * The ceremony is 3:15 PM on Saturday, 9 January 2027.
  */
 export const site = {
   couple: {
@@ -14,8 +11,8 @@ export const site = {
     bride: 'Jovial Rose',
   },
   wedding: {
-    dateISO: '',
-    dateDisplay: '',
+    dateISO: '2027-01-09T15:15:00+05:30',
+    dateDisplay: 'Saturday, 9 January 2027',
     churchTime: '3:15 PM',
     receptionTime: '6:30 PM – 9:30 PM',
   },
@@ -85,9 +82,9 @@ export function weddingIcs(): string | null {
   const start = timed
     ? date.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
     : date.toISOString().slice(0, 10).replaceAll('-', '')
-  const endDate = new Date(
-    date.getTime() + (timed ? 3 : 24) * 60 * 60 * 1000,
-  )
+  const endDate = timed
+    ? new Date(site.wedding.dateISO.replace(/T\d{2}:\d{2}:\d{2}/, 'T21:30:00'))
+    : new Date(date.getTime() + 24 * 60 * 60 * 1000)
   const end = timed
     ? endDate.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}Z$/, 'Z')
     : endDate.toISOString().slice(0, 10).replaceAll('-', '')

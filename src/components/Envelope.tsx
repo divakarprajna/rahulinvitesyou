@@ -1,3 +1,6 @@
+import { site } from '../config'
+import { GardenBackdrop } from './GardenBackdrop'
+
 type EnvelopeProps = {
   opening: boolean
   onOpen: () => void
@@ -19,23 +22,34 @@ const petals = [
 function SealMark() {
   return (
     <svg viewBox="0 0 88 88" aria-hidden="true">
-      <circle cx="44" cy="44" r="40" fill="#6d2030" />
-      <circle cx="44" cy="44" r="33" fill="none" stroke="#f0e2bf" strokeWidth="1.4" />
-      <circle cx="44" cy="44" r="28" fill="none" stroke="#f0e2bf" strokeWidth="0.6" />
+      <defs>
+        <radialGradient id="wax" cx="36%" cy="30%" r="72%">
+          <stop offset="0%" stopColor="#a34758" />
+          <stop offset="48%" stopColor="#6d2030" />
+          <stop offset="100%" stopColor="#3d1018" />
+        </radialGradient>
+      </defs>
       <path
-        d="M44 18 v9 M39.5 22.5 h9"
+        d="M44 8c7 1 11 6 16 6 6 0 10 5 12 10 3 6 8 8 8 14 0 7-4 11-4 17s5 10 2 16c-3 6-9 7-14 10-5 3-8 9-16 9s-11-6-16-9c-5-3-11-4-14-10-3-6 2-10 2-16s-4-10-4-17c0-6 5-8 8-14 2-5 6-10 12-10 5 0 9-5 14-6z"
+        fill="url(#wax)"
+      />
+      <ellipse cx="34" cy="28" rx="10" ry="6" fill="#fff4e4" opacity="0.28" />
+      <circle cx="44" cy="46" r="24" fill="none" stroke="#f0e2bf" strokeWidth="1.3" />
+      <circle cx="44" cy="46" r="19" fill="none" stroke="#f0e2bf" strokeWidth="0.6" />
+      <path
+        d="M44 28 v7 M40.5 31.5 h7"
         stroke="#f8f1e4"
-        strokeWidth="1.8"
+        strokeWidth="1.6"
         strokeLinecap="round"
       />
       <text
         x="44"
-        y="52"
+        y="54"
         textAnchor="middle"
         fill="#f8f1e4"
         fontFamily="Georgia, 'Times New Roman', serif"
-        fontSize="15"
-        letterSpacing="1"
+        fontSize="13"
+        letterSpacing="1.5"
       >
         R · J
       </text>
@@ -46,6 +60,7 @@ function SealMark() {
 export function Envelope({ opening, onOpen }: EnvelopeProps) {
   return (
     <div className={`envelope-screen ${opening ? 'is-opening' : ''}`}>
+      <GardenBackdrop />
       <div className="petals" aria-hidden="true">
         {petals.map((petal) => (
           <span
@@ -71,10 +86,13 @@ export function Envelope({ opening, onOpen }: EnvelopeProps) {
       <p className="env-ml" lang="ml">
         സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു
       </p>
+      <p className="env-date">{site.wedding.dateDisplay}</p>
 
-      <div className="envelope-scene">
+      <div className="envelope-stage">
+        <div className="envelope-scene">
         <div className={`envelope ${opening ? 'open' : ''}`}>
           <div className="env-back" />
+          <div className="env-liner" aria-hidden="true" />
           <div className="env-letter">
             <span className="env-letter-cross" aria-hidden="true">
               ✝
@@ -92,6 +110,7 @@ export function Envelope({ opening, onOpen }: EnvelopeProps) {
           >
             <SealMark />
           </button>
+        </div>
         </div>
       </div>
 
