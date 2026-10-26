@@ -438,6 +438,46 @@ blockquote cite {
 .venue-card .ml { margin: 10px 0 0; color: var(--wine); }
 .place-detail,
 .time-line { margin: 4px 0 0; color: var(--gold); }
+.time-line.later { margin-top: 14px; }
+.time-note {
+  margin: 2px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+.day-list {
+  list-style: none;
+  margin: 28px auto 0;
+  padding: 0;
+  max-width: 520px;
+  text-align: left;
+}
+.day-list li {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 18px;
+  align-items: baseline;
+  padding: 16px 0;
+  border-top: 1px solid var(--line);
+}
+.day-list li:last-child { border-bottom: 1px solid var(--line); }
+.day-list time {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.45rem;
+  color: var(--gold);
+}
+.day-list strong {
+  display: block;
+  font-weight: 600;
+  color: var(--ink);
+}
+.day-list span {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.45;
+}
 .venue-card address {
   margin-top: 8px;
   font-style: normal;

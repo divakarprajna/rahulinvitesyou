@@ -3,13 +3,10 @@ const asset = (path: string) =>
 
 /**
  * Venue names and addresses come from the location screenshots.
- * Those screenshots do not include the wedding day or the ceremony time.
- * When you have them, fill the wedding fields below. Example:
- * dateISO: '2026-12-27T10:30:00+05:30'
- * dateDisplay: 'Sunday, 27 December 2026'
- * churchTime: '10:30 AM'
- * receptionTime: '1:00 PM onwards'
- * whatsapp: '919876543210'
+ * The ceremony times are set. The wedding date is still missing.
+ * When you have the day, fill dateISO and dateDisplay. Example:
+ * dateISO: 'YYYY-MM-DDT15:15:00+05:30'
+ * dateDisplay: 'Weekday, D Month YYYY'
  */
 export const site = {
   couple: {
@@ -19,9 +16,27 @@ export const site = {
   wedding: {
     dateISO: '',
     dateDisplay: '',
-    churchTime: '',
-    receptionTime: '',
+    churchTime: '3:15 PM',
+    receptionTime: '6:30 PM',
+    endTime: '9:30 PM',
   },
+  schedule: [
+    {
+      time: '3:15 PM',
+      title: 'Ceremony',
+      detail: "St. Sebastian's Forane Church, Thodupuzha",
+    },
+    {
+      time: '6:30 PM',
+      title: 'Guests arrive',
+      detail: 'Jacobs Convention Center',
+    },
+    {
+      time: '9:30 PM',
+      title: 'Evening ends',
+      detail: '',
+    },
+  ],
   church: {
     name: "St. Sebastian's Forane Church",
     malayalamPlace: 'തൊടുപുഴ',

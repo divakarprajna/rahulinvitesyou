@@ -182,6 +182,7 @@ function addToCalendar() {
 
 export function Invitation() {
   const welcome = useReveal<HTMLElement>()
+  const day = useReveal<HTMLElement>()
   const church = useReveal<HTMLElement>()
   const walk = useReveal<HTMLElement>()
   const reception = useReveal<HTMLElement>()
@@ -263,6 +264,21 @@ export function Invitation() {
         </p>
       </section>
 
+      <section ref={day.ref} className={`section narrow day ${day.className}`}>
+        <p className="kicker">The day</p>
+        <ol className="day-list">
+          {site.schedule.map((item) => (
+            <li key={item.time}>
+              <time>{item.time}</time>
+              <div>
+                <strong>{item.title}</strong>
+                {item.detail ? <span>{item.detail}</span> : null}
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
       {weddingDate() && (
         <section className="countdown-band" aria-label="Countdown to the wedding">
           <p className="kicker">Counting the days</p>
@@ -285,9 +301,8 @@ export function Invitation() {
               വിവാഹ കൂദാശ · {site.church.malayalamPlace}
             </p>
             <h3>{site.church.name}</h3>
-            {site.wedding.churchTime && (
-              <p className="time-line">{site.wedding.churchTime}</p>
-            )}
+            <p className="time-line">{site.wedding.churchTime}</p>
+            <p className="time-note">Ceremony</p>
             <address>{site.church.address}</address>
             <p>
               The marriage will be solemnised in the parish church at
@@ -339,9 +354,10 @@ export function Invitation() {
             </p>
             <h3>{site.reception.name}</h3>
             <p className="place-detail">{site.reception.detail}</p>
-            {site.wedding.receptionTime && (
-              <p className="time-line">{site.wedding.receptionTime}</p>
-            )}
+            <p className="time-line">{site.wedding.receptionTime}</p>
+            <p className="time-note">Guests arrive</p>
+            <p className="time-line later">{site.wedding.endTime}</p>
+            <p className="time-note">Evening ends</p>
             <address>{site.reception.address}</address>
             <p>
               After the church blessing, the celebration continues among the
