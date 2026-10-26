@@ -182,6 +182,7 @@ function addToCalendar() {
 }
 
 export function Invitation() {
+  const welcome = useReveal<HTMLElement>()
   const day = useReveal<HTMLElement>()
   const church = useReveal<HTMLElement>()
   const walk = useReveal<HTMLElement>()
@@ -240,12 +241,25 @@ export function Invitation() {
             {dateLabel && <p className="date-line">{dateLabel}</p>}
           </div>
         </div>
-        <a className="scroll-cue" href="#day">
+        <a className="scroll-cue" href="#welcome">
           Scroll
         </a>
       </header>
 
-      <section id="day" ref={day.ref} className={`section narrow day ${day.className}`}>
+      <section id="welcome" ref={welcome.ref} className={`section narrow ${welcome.className}`}>
+        <CrossRule />
+        <blockquote>
+          What God has joined together, let no one separate.
+          <cite>Mark 10:9</cite>
+        </blockquote>
+        <p>
+          Rahul Shaji and Jovial Rose ask you to witness their Holy Matrimony
+          and to stay for the celebration that follows. Your presence and your
+          prayers are the gift they hope for.
+        </p>
+      </section>
+
+      <section ref={day.ref} className={`section narrow day ${day.className}`}>
         <p className="kicker">The day</p>
         <ol className="day-list">
           {site.schedule.map((item) => (
