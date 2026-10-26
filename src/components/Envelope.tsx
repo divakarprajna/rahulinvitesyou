@@ -19,6 +19,9 @@ const petals = [
   { left: '93%', delay: '1s', duration: '12s', size: 9 },
 ]
 
+const sealShape =
+  'M44 8c7 1 11 6 16 6 6 0 10 5 12 10 3 6 8 8 8 14 0 7-4 11-4 17s5 10 2 16c-3 6-9 7-14 10-5 3-8 9-16 9s-11-6-16-9c-5-3-11-4-14-10-3-6 2-10 2-16s-4-10-4-17c0-6 5-8 8-14 2-5 6-10 12-10 5 0 9-5 14-6z'
+
 function SealMark() {
   return (
     <svg viewBox="0 0 88 88" aria-hidden="true">
@@ -28,10 +31,26 @@ function SealMark() {
           <stop offset="48%" stopColor="#6d2030" />
           <stop offset="100%" stopColor="#3d1018" />
         </radialGradient>
+        <linearGradient id="sealGold" x1="18%" y1="6%" x2="84%" y2="96%">
+          <stop offset="0%" stopColor="#f8edd2" />
+          <stop offset="42%" stopColor="#e0c17a" />
+          <stop offset="100%" stopColor="#8d6430" />
+        </linearGradient>
       </defs>
       <path
-        d="M44 8c7 1 11 6 16 6 6 0 10 5 12 10 3 6 8 8 8 14 0 7-4 11-4 17s5 10 2 16c-3 6-9 7-14 10-5 3-8 9-16 9s-11-6-16-9c-5-3-11-4-14-10-3-6 2-10 2-16s-4-10-4-17c0-6 5-8 8-14 2-5 6-10 12-10 5 0 9-5 14-6z"
+        d={sealShape}
+        fill="none"
+        stroke="#6e4c24"
+        strokeWidth="7"
+        strokeLinejoin="round"
+      />
+      <path
+        d={sealShape}
         fill="url(#wax)"
+        stroke="url(#sealGold)"
+        strokeWidth="3.6"
+        strokeLinejoin="round"
+        paintOrder="stroke fill"
       />
       <ellipse cx="34" cy="28" rx="10" ry="6" fill="#fff4e4" opacity="0.28" />
       <circle cx="44" cy="46" r="24" fill="none" stroke="#f0e2bf" strokeWidth="1.3" />
