@@ -254,9 +254,15 @@ export function Invitation() {
           <cite>Mark 10:9</cite>
         </blockquote>
         <p>
-          Rahul Shaji and Jovial Rose ask you to witness their Holy Matrimony
-          and to stay for the celebration that follows. Your presence and your
-          prayers are the gift they hope for.
+          With the blessings of our families, we are delighted to invite you to
+          our wedding celebration ❤️
+        </p>
+        <p>
+          Your presence and blessings would mean a lot to us as we begin this
+          beautiful journey together 🧿✨
+        </p>
+        <p>
+          We would love to celebrate our special day with you and your family 😊
         </p>
       </section>
 
