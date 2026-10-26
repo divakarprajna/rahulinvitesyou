@@ -190,8 +190,6 @@ export function Invitation() {
   const portrait = useReveal<HTMLElement>()
   const [active, setActive] = useState<Photo | null>(null)
   const [openMap, setOpenMap] = useState<'church' | 'reception' | null>(null)
-  const [showChip, setShowChip] = useState(false)
-  const [rsvpVisible, setRsvpVisible] = useState(false)
 
   useEffect(() => {
     const onScroll = () => {
@@ -199,11 +197,6 @@ export function Invitation() {
       const max = root.scrollHeight - root.clientHeight
       const progress = max > 0 ? root.scrollTop / max : 0
       root.style.setProperty('--scroll', progress.toFixed(4))
-      setShowChip(root.scrollTop > window.innerHeight * 0.45)
-      const rsvp = document.getElementById('rsvp')
-      if (rsvp) {
-        setRsvpVisible(rsvp.getBoundingClientRect().top < window.innerHeight * 0.72)
-      }
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
@@ -288,7 +281,7 @@ export function Invitation() {
           {dateLabel && <p className="countdown-date">{dateLabel}</p>}
           <Countdown />
           <button type="button" className="ghost-button" onClick={addToCalendar}>
-            Add to calendar
+            Save the date
           </button>
         </section>
       )}
@@ -412,12 +405,6 @@ export function Invitation() {
         <p>Rahul Shaji & Jovial Rose</p>
         <p className="footer-places">Thodupuzha · Muvattupuzha</p>
       </footer>
-
-      {showChip && !rsvpVisible && (
-        <a className="rsvp-chip" href="#rsvp">
-          RSVP
-        </a>
-      )}
 
       {active && (
         <div

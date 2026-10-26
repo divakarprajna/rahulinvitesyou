@@ -160,12 +160,96 @@ button { cursor: pointer; }
   font-size: 1rem;
   text-align: center;
 }
-.env-date {
-  margin: 8px 0 0;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+.scratch-card {
+  position: relative;
+  z-index: 2;
+  width: min(68vw, 280px);
+  height: 86px;
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+.scratch-reveal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: #fffaf3;
+  color: var(--emerald-deep);
+}
+.scratch-reveal strong {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.scratch-reveal span {
   font-size: 0.72rem;
-  color: var(--gold-soft);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--wine);
+}
+.scratch-foil {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: pointer;
+}
+.scratch-card.clear .scratch-foil { opacity: 0; }
+.lamp {
+  position: absolute;
+  z-index: 2;
+  top: 58%;
+  width: 46px;
+  transform-origin: top center;
+  animation: sway 3.4s ease-in-out infinite;
+  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.25));
+}
+.lamp.left { left: max(10px, 4vw); }
+.lamp.right { right: max(10px, 4vw); animation-delay: -1.5s; }
+.lamp svg { display: block; width: 100%; height: auto; }
+.lamp-chain {
+  display: block;
+  width: 1px;
+  height: 28px;
+  margin: 0 auto;
+  background: linear-gradient(#f0e2bf, transparent);
+}
+@keyframes sway {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(8deg); }
+}
+.envelope-screen.is-opening .lamp {
+  animation: sway-wide 0.9s ease-in-out 3;
+}
+@keyframes sway-wide {
+  0%, 100% { transform: rotate(-16deg); }
+  50% { transform: rotate(16deg); }
+}
+.open-burst {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 58%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(240, 226, 191, 0.8);
+  transform: translate(-50%, -50%);
+  animation: burst 1.5s ease forwards;
+  pointer-events: none;
+}
+@keyframes burst {
+  to { width: 280px; height: 280px; opacity: 0; }
+}
+.envelope-screen.is-opening .petal {
+  animation-duration: 2.2s;
 }
 .env-hint {
   margin: 22px 0 0;
@@ -184,8 +268,8 @@ button { cursor: pointer; }
   margin-top: 16px;
 }
 .envelope-scene {
-  width: min(88vw, 380px);
-  height: 238px;
+  width: min(68vw, 340px);
+  height: 220px;
   margin-top: 0;
   transform: rotateX(16deg) rotateY(-8deg);
   transition: transform 2.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -443,7 +527,7 @@ button { cursor: pointer; }
 .section {
   width: min(1080px, calc(100% - 32px));
   margin: 0 auto;
-  padding: 72px 0;
+  padding: 28px 0;
 }
 .section.narrow { max-width: 740px; text-align: center; }
 @media (prefers-reduced-motion: no-preference) {
@@ -600,7 +684,7 @@ blockquote cite {
   font-size: clamp(2rem, 5vw, 3.2rem);
   text-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
 }
-.closing { text-align: center; padding-top: 20px; }
+.closing { text-align: center; padding-top: 8px; padding-bottom: 8px; }
 .script-line {
   margin: 0;
   font-family: "Great Vibes", cursive;
@@ -769,20 +853,24 @@ legend { font-weight: 600; margin-bottom: 8px; }
   text-transform: uppercase;
   font-size: 0.75rem;
 }
-.rsvp-chip {
+.music-toggle {
   position: fixed;
   z-index: 25;
   right: 16px;
   bottom: 16px;
-  padding: 12px 18px;
-  border-radius: 999px;
-  background: var(--wine);
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid var(--gold-soft);
+  border-radius: 50%;
+  background: var(--emerald);
   color: #f6f1e7;
-  text-decoration: none;
-  letter-spacing: 0.16em;
-  font-size: 0.75rem;
-  box-shadow: 0 10px 24px rgba(109, 32, 48, 0.35);
+  box-shadow: 0 10px 24px rgba(11, 36, 30, 0.35);
 }
+.music-toggle svg { width: 24px; height: 24px; }
+.music-toggle.is-muted { background: #3d2914; }
 .lightbox {
   position: fixed;
   inset: 0;
@@ -810,7 +898,7 @@ legend { font-weight: 600; margin-bottom: 8px; }
 .countdown-band {
   width: min(920px, calc(100% - 32px));
   margin: 0 auto 12px;
-  padding: 8px 0 64px;
+  padding: 4px 0 20px;
   text-align: center;
 }
 .countdown-band h2 {
@@ -859,7 +947,17 @@ legend { font-weight: 600; margin-bottom: 8px; }
 }
 .countdown-band .ghost-button { margin-top: 22px; }
 
+@media (max-width: 700px) {
+  .envelope-screen { padding: 18px 16px 16px; }
+  .envelope-frame { inset: 10px; }
+  .envelope-scene { width: min(64vw, 280px); height: 196px; }
+  .lamp { width: 34px; top: 63%; }
+  .env-names { font-size: clamp(2.5rem, 11vw, 3.6rem); }
+  .env-hint { margin-top: 12px; }
+  .sprig { width: 92px; }
+}
 @media (min-width: 860px) {
+  .section { padding: 64px 0; }
   .hero-card { grid-template-columns: minmax(280px, 420px) 1fr; gap: 64px; }
   .hero-copy { text-align: left; }
   .hero .ml { margin-left: 0; }
