@@ -594,6 +594,27 @@ legend { font-weight: 600; margin-bottom: 8px; }
   font-weight: 600;
 }
 .rsvp-error { color: #8a2a2a; }
+.contact-icons {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 18px;
+}
+.icon-link {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #fffdf8;
+  color: var(--emerald);
+  text-decoration: none;
+}
+.icon-link svg { width: 24px; height: 24px; display: block; }
+.icon-link.whatsapp { color: #128c7e; border-color: rgba(18, 140, 126, 0.4); }
+.icon-link.mail { color: var(--wine); }
+.icon-link:hover { transform: translateY(-2px); }
 .reply-ready {
   margin-top: 18px;
   text-align: left;
