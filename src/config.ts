@@ -44,7 +44,12 @@ export const site = {
     embrace: asset('photos/embrace.jpg'),
   },
   rsvp: {
-    whatsapp: '',
+    email: 'rahulshaji235@gmail.com',
+    /** Digits only, with country code, for wa.me */
+    whatsapp: '447444406003',
+    phoneDisplay: '+44 7444 406003',
+    sheetSubmitUrl:
+      'https://script.google.com/macros/s/AKfycbwWupcaMAKNImDOj50hss7DoletIX1gJ9Qa89Wc_ujIcfZPgtD79xRQ6arN_ybGwcX4pA/exec',
   },
 } as const
 

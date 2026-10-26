@@ -588,6 +588,12 @@ legend { font-weight: 600; margin-bottom: 8px; }
 .stepper strong { min-width: 1.4rem; text-align: center; font-size: 1.1rem; }
 .stepper button { width: 40px; height: 40px; padding: 0; }
 .gold-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.rsvp-status {
+  margin: 16px 0 0;
+  color: #1f6b45;
+  font-weight: 600;
+}
+.rsvp-error { color: #8a2a2a; }
 .reply-ready {
   margin-top: 18px;
   text-align: left;

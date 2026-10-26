@@ -2,6 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { site } from '../config'
 
 type Attendance = 'yes' | 'no' | ''
+type Status = 'idle' | 'submitting' | 'sent' | 'error'
 
 function replyText(input: {
   name: string
@@ -14,7 +15,7 @@ function replyText(input: {
   return [
     'RSVP for the wedding of Rahul Shaji & Jovial Rose',
     `Name: ${input.name}`,
-    input.phone ? `Phone: ${input.phone}` : '',
+    `Phone: ${input.phone}`,
     coming ? `Guests: ${input.guests}` : 'Guests: 0',
     `Attending: ${coming ? 'Yes, with joy' : 'Sending love from afar'}`,
     input.note ? `Note: ${input.note}` : '',
@@ -23,43 +24,77 @@ function replyText(input: {
     .join('\n')
 }
 
+/**
+ * The live sheet only stores a name and a phone number.
+ * Attendance, guest count, and the note ride in the name
+ * so they still land in that same spreadsheet.
+ */
+function sheetName(input: {
+  name: string
+  guests: number
+  attendance: Attendance
+  note: string
+}) {
+  const coming = input.attendance === 'yes'
+  const parts = [
+    input.name,
+    'Rahul & Jovial',
+    coming ? `Yes, ${input.guests}` : 'No',
+  ]
+  if (input.note) parts.push(input.note)
+  return parts.join(' · ')
+}
+
 export function Rsvp() {
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [guests, setGuests] = useState(1)
   const [attendance, setAttendance] = useState<Attendance>('')
   const [note, setNote] = useState('')
-  const [readyText, setReadyText] = useState('')
-  const [copied, setCopied] = useState(false)
+  const [status, setStatus] = useState<Status>('idle')
+  const [sentText, setSentText] = useState('')
 
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const message =
+    sentText ||
+    'Hi Rahul, I would like to RSVP for your wedding with Jovial.'
+  const whatsappHref = `https://wa.me/${site.rsvp.whatsapp}?text=${encodeURIComponent(message)}`
+  const emailHref = `mailto:${site.rsvp.email}?subject=${encodeURIComponent('RSVP for Rahul and Jovial')}&body=${encodeURIComponent(message)}`
+
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     if (!attendance) return
 
-    const text = replyText({ name: name.trim(), phone: phone.trim(), guests, attendance, note: note.trim() })
-    setReadyText(text)
-    setCopied(false)
-
-    if (site.rsvp.whatsapp) {
-      const url = `https://wa.me/${site.rsvp.whatsapp}?text=${encodeURIComponent(text)}`
-      window.open(url, '_blank', 'noopener,noreferrer')
+    const payload = {
+      name: name.trim(),
+      phone: phone.trim(),
+      guests,
+      attendance,
+      note: note.trim(),
     }
-  }
+    const text = replyText(payload)
+    setStatus('submitting')
 
-  const copyReply = async () => {
-    await navigator.clipboard.writeText(readyText)
-    setCopied(true)
-  }
+    try {
+      const formData = new FormData()
+      formData.append('name', sheetName(payload))
+      formData.append('phone', payload.phone)
 
-  const shareReply = async () => {
-    if (!navigator.share) {
-      await copyReply()
-      return
+      await fetch(site.rsvp.sheetSubmitUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: formData,
+      })
+
+      setSentText(text)
+      setName('')
+      setPhone('')
+      setGuests(1)
+      setAttendance('')
+      setNote('')
+      setStatus('sent')
+    } catch {
+      setStatus('error')
     }
-    await navigator.share({
-      title: 'RSVP for Rahul & Jovial',
-      text: readyText,
-    })
   }
 
   return (
@@ -72,7 +107,7 @@ export function Rsvp() {
           the day.
         </p>
 
-        <form className="rsvp-form" onSubmit={onSubmit}>
+        <form className="rsvp-form" onSubmit={(event) => void onSubmit(event)}>
           <label>
             Your name
             <input
@@ -89,9 +124,10 @@ export function Rsvp() {
             <input
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
-              name="tel"
+              name="phone"
               type="tel"
               autoComplete="tel"
+              required
               placeholder="So they can reach you"
             />
           </label>
@@ -146,34 +182,36 @@ export function Rsvp() {
             <textarea
               value={note}
               onChange={(event) => setNote(event.target.value)}
+              name="note"
               rows={3}
               placeholder="A blessing, a song request, a dietary note"
             />
           </label>
 
-          <button className="gold-button" type="submit" disabled={!attendance}>
-            {site.rsvp.whatsapp ? 'Send on WhatsApp' : 'Write my reply'}
+          <button className="gold-button" type="submit" disabled={!attendance || status === 'submitting'}>
+            {status === 'submitting' ? 'Sending...' : 'Send RSVP'}
           </button>
         </form>
 
-        {readyText && (
-          <div className="reply-ready" role="status">
-            <p>
-              {site.rsvp.whatsapp
-                ? 'WhatsApp is opening with your reply.'
-                : 'Your reply is ready. Share it with Rahul and Jovial.'}
-            </p>
-            <pre>{readyText}</pre>
-            <div className="ready-actions">
-              <button type="button" className="ghost-button" onClick={() => void copyReply()}>
-                {copied ? 'Copied' : 'Copy reply'}
-              </button>
-              <button type="button" className="ghost-button" onClick={() => void shareReply()}>
-                Share reply
-              </button>
-            </div>
-          </div>
+        {status === 'sent' && (
+          <p className="rsvp-status" role="status">
+            Your RSVP is saved. Thank you.
+          </p>
         )}
+        {status === 'error' && (
+          <p className="rsvp-status rsvp-error" role="status">
+            That didn’t save. Please WhatsApp or email Rahul instead.
+          </p>
+        )}
+
+        <div className="ready-actions">
+          <a className="ghost-button" href={whatsappHref} target="_blank" rel="noreferrer">
+            WhatsApp {site.rsvp.phoneDisplay}
+          </a>
+          <a className="ghost-button" href={emailHref}>
+            Email {site.rsvp.email}
+          </a>
+        </div>
       </div>
     </section>
   )
