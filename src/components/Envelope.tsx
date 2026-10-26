@@ -1,5 +1,5 @@
+import { site } from '../config'
 import { GardenBackdrop } from './GardenBackdrop'
-import { ScratchDate } from './ScratchDate'
 
 type EnvelopeProps = {
   opening: boolean
@@ -18,26 +18,6 @@ const petals = [
   { left: '12%', delay: '5s', duration: '16s', size: 6 },
   { left: '93%', delay: '1s', duration: '12s', size: 9 },
 ]
-
-function Lamp({ side }: { side: 'left' | 'right' }) {
-  return (
-    <div className={`lamp ${side}`} aria-hidden="true">
-      <span className="lamp-chain" />
-      <svg viewBox="0 0 64 96">
-        <path d="M32 6 v16" stroke="#e7d7b0" strokeWidth="1.4" />
-        <path
-          d="M32 22c10 8 16 16 16 28 0 14-7 24-16 32-9-8-16-18-16-32 0-12 6-20 16-28z"
-          fill="#6d2030"
-          stroke="#f0e2bf"
-          strokeWidth="1.2"
-        />
-        <ellipse cx="32" cy="48" rx="7" ry="12" fill="#f6e2a8" opacity="0.9" />
-        <path d="M24 78h16" stroke="#e7d7b0" strokeWidth="1.2" />
-        <circle cx="32" cy="84" r="2" fill="#e7d7b0" />
-      </svg>
-    </div>
-  )
-}
 
 function SealMark() {
   return (
@@ -106,10 +86,7 @@ export function Envelope({ opening, onOpen }: EnvelopeProps) {
       <p className="env-ml" lang="ml">
         സ്നേഹപൂർവ്വം ക്ഷണിക്കുന്നു
       </p>
-      <ScratchDate />
-
-      <Lamp side="left" />
-      <Lamp side="right" />
+      <p className="env-date">{site.wedding.dateDisplay}</p>
       {opening && <span className="open-burst" aria-hidden="true" />}
 
       <div className="envelope-stage">

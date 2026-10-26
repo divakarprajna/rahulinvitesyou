@@ -8,6 +8,7 @@ import {
 } from '../config'
 import { GardenBackdrop } from './GardenBackdrop'
 import { Rsvp } from './Rsvp'
+import { ScratchCover } from './ScratchDate'
 
 type Photo = {
   src: string
@@ -278,8 +279,10 @@ export function Invitation() {
         <section className="countdown-band" aria-label="Countdown to the wedding">
           <p className="kicker">Counting the days</p>
           <h2>Until we say I do</h2>
-          {dateLabel && <p className="countdown-date">{dateLabel}</p>}
-          <Countdown />
+          <ScratchCover>
+            {dateLabel && <p className="countdown-date">{dateLabel}</p>}
+            <Countdown />
+          </ScratchCover>
           <button type="button" className="ghost-button" onClick={addToCalendar}>
             Save the date
           </button>

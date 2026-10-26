@@ -160,77 +160,28 @@ button { cursor: pointer; }
   font-size: 1rem;
   text-align: center;
 }
-.scratch-card {
-  position: relative;
-  z-index: 2;
-  width: min(68vw, 280px);
-  height: 86px;
-  margin-top: 12px;
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-}
-.scratch-reveal {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2px;
-  background: #fffaf3;
-  color: var(--emerald-deep);
-}
-.scratch-reveal strong {
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.scratch-reveal span {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
+.env-date {
+  margin: 8px 0 0;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--wine);
+  font-size: 0.72rem;
+  color: var(--gold-soft);
+}
+.scratch-cover {
+  position: relative;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 18px;
 }
 .scratch-foil {
   position: absolute;
   inset: 0;
+  z-index: 2;
   width: 100%;
   height: 100%;
+  border-radius: 18px;
   touch-action: none;
   cursor: pointer;
-}
-.scratch-card.clear .scratch-foil { opacity: 0; }
-.lamp {
-  position: absolute;
-  z-index: 2;
-  top: 58%;
-  width: 46px;
-  transform-origin: top center;
-  animation: sway 3.4s ease-in-out infinite;
-  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.25));
-}
-.lamp.left { left: max(10px, 4vw); }
-.lamp.right { right: max(10px, 4vw); animation-delay: -1.5s; }
-.lamp svg { display: block; width: 100%; height: auto; }
-.lamp-chain {
-  display: block;
-  width: 1px;
-  height: 28px;
-  margin: 0 auto;
-  background: linear-gradient(#f0e2bf, transparent);
-}
-@keyframes sway {
-  0%, 100% { transform: rotate(-7deg); }
-  50% { transform: rotate(8deg); }
-}
-.envelope-screen.is-opening .lamp {
-  animation: sway-wide 0.9s ease-in-out 3;
-}
-@keyframes sway-wide {
-  0%, 100% { transform: rotate(-16deg); }
-  50% { transform: rotate(16deg); }
 }
 .open-burst {
   position: absolute;
@@ -853,24 +804,44 @@ legend { font-weight: 600; margin-bottom: 8px; }
   text-transform: uppercase;
   font-size: 0.75rem;
 }
-.music-toggle {
+.music-wave {
   position: fixed;
   z-index: 25;
   right: 16px;
   bottom: 16px;
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  padding: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 3px;
+  width: 56px;
+  height: 48px;
+  padding: 10px 8px;
   border: 1px solid var(--gold-soft);
-  border-radius: 50%;
+  border-radius: 14px;
   background: var(--emerald);
-  color: #f6f1e7;
   box-shadow: 0 10px 24px rgba(11, 36, 30, 0.35);
 }
-.music-toggle svg { width: 24px; height: 24px; }
-.music-toggle.is-muted { background: #3d2914; }
+.music-wave span {
+  width: 4px;
+  height: 30%;
+  border-radius: 99px;
+  background: #f6f1e7;
+  transform-origin: center bottom;
+  animation: wave 0.9s ease-in-out infinite;
+}
+.music-wave span:nth-child(2) { animation-delay: 0.12s; }
+.music-wave span:nth-child(3) { animation-delay: 0.24s; }
+.music-wave span:nth-child(4) { animation-delay: 0.08s; }
+.music-wave span:nth-child(5) { animation-delay: 0.2s; }
+.music-wave.is-muted span {
+  animation: none;
+  height: 16%;
+  opacity: 0.45;
+}
+@keyframes wave {
+  0%, 100% { height: 22%; }
+  50% { height: 100%; }
+}
 .lightbox {
   position: fixed;
   inset: 0;
@@ -951,7 +922,6 @@ legend { font-weight: 600; margin-bottom: 8px; }
   .envelope-screen { padding: 18px 16px 16px; }
   .envelope-frame { inset: 10px; }
   .envelope-scene { width: min(64vw, 280px); height: 196px; }
-  .lamp { width: 34px; top: 63%; }
   .env-names { font-size: clamp(2.5rem, 11vw, 3.6rem); }
   .env-hint { margin-top: 12px; }
   .sprig { width: 92px; }
