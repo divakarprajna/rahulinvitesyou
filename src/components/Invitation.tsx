@@ -8,7 +8,6 @@ import {
 } from '../config'
 import { GardenBackdrop } from './GardenBackdrop'
 import { Rsvp } from './Rsvp'
-import { VelvetCover } from './ScratchDate'
 
 type Photo = {
   src: string
@@ -159,10 +158,10 @@ function Countdown() {
   return (
     <div className="countdown" aria-label="Countdown to the wedding">
       {units.map(([label, value]) => (
-        <VelvetCover key={label}>
+        <div key={label}>
           <strong>{String(value).padStart(2, '0')}</strong>
           <span>{label}</span>
-        </VelvetCover>
+        </div>
       ))}
     </div>
   )
@@ -285,11 +284,7 @@ export function Invitation() {
         <section className="countdown-band" aria-label="Countdown to the wedding">
           <p className="kicker">Counting the days</p>
           <h2>Until we say I do</h2>
-          {dateLabel && (
-            <VelvetCover className="date-cover">
-              <p className="countdown-date">{dateLabel}</p>
-            </VelvetCover>
-          )}
+          {dateLabel && <p className="countdown-date">{dateLabel}</p>}
           <Countdown />
           <button type="button" className="ghost-button" onClick={addToCalendar}>
             Save the date

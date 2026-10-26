@@ -167,25 +167,6 @@ button { cursor: pointer; }
   font-size: 0.72rem;
   color: var(--gold-soft);
 }
-.velvet-cover {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-}
-.velvet-cover.date-cover {
-  margin: 14px auto 0;
-  max-width: 440px;
-}
-.velvet-foil {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  border-radius: inherit;
-  touch-action: none;
-  cursor: pointer;
-}
 .open-burst {
   position: absolute;
   z-index: 3;
@@ -883,8 +864,7 @@ legend { font-weight: 600; margin-bottom: 8px; }
   color: var(--emerald);
 }
 .countdown-date {
-  margin: 0;
-  padding: 16px 18px;
+  margin: 12px 0 0;
   color: var(--gold);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -895,9 +875,9 @@ legend { font-weight: 600; margin-bottom: 8px; }
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   max-width: 720px;
-  margin: 18px auto 0;
+  margin: 28px auto 0;
 }
-.countdown .velvet-cover {
+.countdown div {
   padding: 22px 8px 18px;
   border: 1px solid var(--line);
   border-radius: 18px;
