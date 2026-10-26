@@ -7,5 +7,7 @@ export default defineConfig({
   server: {
     port: 5174,
     strictPort: true,
+    // Phone previews arrive through a tunnel hostname, not localhost.
+    allowedHosts: true,
   },
 })
