@@ -17,24 +17,18 @@ export const site = {
     dateISO: '',
     dateDisplay: '',
     churchTime: '3:15 PM',
-    receptionTime: '6:30 PM',
-    endTime: '9:30 PM',
+    receptionTime: '6:30 PM – 9:30 PM',
   },
   schedule: [
     {
       time: '3:15 PM',
-      title: 'Ceremony',
+      title: 'Church',
       detail: "St. Sebastian's Forane Church, Thodupuzha",
     },
     {
-      time: '6:30 PM',
-      title: 'Guests arrive',
-      detail: 'Jacobs Convention Center',
-    },
-    {
-      time: '9:30 PM',
-      title: 'Evening ends',
-      detail: '',
+      time: '6:30 PM – 9:30 PM',
+      title: 'Wedding',
+      detail: 'Jacobs Entertainments',
     },
   ],
   church: {

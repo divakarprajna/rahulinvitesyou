@@ -302,7 +302,7 @@ export function Invitation() {
             </p>
             <h3>{site.church.name}</h3>
             <p className="time-line">{site.wedding.churchTime}</p>
-            <p className="time-note">Ceremony</p>
+            <p className="time-note">Church</p>
             <address>{site.church.address}</address>
             <p>
               The marriage will be solemnised in the parish church at
@@ -355,9 +355,7 @@ export function Invitation() {
             <h3>{site.reception.name}</h3>
             <p className="place-detail">{site.reception.detail}</p>
             <p className="time-line">{site.wedding.receptionTime}</p>
-            <p className="time-note">Guests arrive</p>
-            <p className="time-line later">{site.wedding.endTime}</p>
-            <p className="time-note">Evening ends</p>
+            <p className="time-note">Wedding</p>
             <address>{site.reception.address}</address>
             <p>
               After the church blessing, the celebration continues among the
