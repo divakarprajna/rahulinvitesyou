@@ -9,13 +9,13 @@ export function startMusic() {
     track.preload = 'auto'
     track.preservesPitch = true
   }
-  track.playbackRate = 0.75
+  track.playbackRate = 0.90
   if (track.paused) void track.play()
 }
 
 export function setMuted(muted: boolean) {
   if (!track) return
-  track.playbackRate = 0.75
+  track.playbackRate = 0.90
   track.muted = muted
   if (!muted && track.paused) void track.play()
 }
